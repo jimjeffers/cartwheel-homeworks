@@ -176,6 +176,7 @@
     let selected = -1;
     let problematic = new Set();
     let flagsStorageKey = "";
+    let flagsStoragePrefix = "";
     let flagsReadable = true;
     let menuSession = null;
     const supportsPopover = "popover" in HTMLElement.prototype;
@@ -311,13 +312,28 @@
 
     function loadFlags(name) {
       flagsStorageKey = `cartwheel.session-viewer.problematic.v1:${name}`;
+      flagsStoragePrefix = `cartwheel.session-viewer.problematic.v2:${JSON.stringify(name)}:`;
       flagsReadable = true;
+      problematic = new Set();
+      readFlags();
+    }
+
+    function readFlags() {
       try {
+        // Keep previously saved flags as defaults. Each session now has its own
+        // override so two tabs cannot overwrite changes to different sessions.
         const stored = JSON.parse(localStorage.getItem(flagsStorageKey) ?? "[]");
         if (!Array.isArray(stored) || stored.some(key => typeof key !== "string")) throw new Error("Invalid flags");
-        problematic = new Set(stored);
+        const loaded = new Set(stored);
+        for (const session of sessions) {
+          const key = sessionKey(session);
+          const value = localStorage.getItem(flagsStoragePrefix + key);
+          if (value === "true") loaded.add(key);
+          else if (value === "false") loaded.delete(key);
+          else if (value !== null) throw new Error("Invalid flag");
+        }
+        problematic = loaded;
       } catch {
-        problematic = new Set();
         flagsReadable = false;
         flagStorageNotice("Saved flags could not be read. Flag changes will last only for this visit.");
       }
@@ -421,7 +437,7 @@
       if (problematic.has(key)) problematic.delete(key);
       else problematic.add(key);
       if (flagsReadable) {
-        try { localStorage.setItem(flagsStorageKey, JSON.stringify([...problematic])); }
+        try { localStorage.setItem(flagsStoragePrefix + key, String(problematic.has(key))); }
         catch { flagStorageNotice("Flag updated for this visit, but could not be saved. Browser storage may be unavailable or full."); }
       }
       closeSessionMenu(false);
@@ -551,6 +567,13 @@
     });
     document.addEventListener("scroll", () => closeSessionMenu(false), true);
     window.addEventListener("resize", () => closeSessionMenu(false));
+    window.addEventListener("storage", event => {
+      if (!flagsReadable || !flagsStorageKey || event.storageArea !== localStorage) return;
+      if (event.key !== null && event.key !== flagsStorageKey && !event.key.startsWith(flagsStoragePrefix)) return;
+      readFlags();
+      closeSessionMenu(false);
+      if (sessions.length) refreshSessions();
+    });
     $("file-input").addEventListener("change", async event => {
       const file = event.target.files[0];
       if (!file) return;
