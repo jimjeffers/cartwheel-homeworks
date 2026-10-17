@@ -50,6 +50,27 @@ uv run python -m agent.cli --role shopper --user 1
 
 CLI tracing is off by default. Building a non-OpenAI agent (including Ollama through LiteLLM) also removes the SDK's implicit OpenAI exporter for direct runs. Tracing destinations are process-wide; select Langfuse or explicitly opt into OpenAI tracing before running agents. Add `--debug` to print tool calls and results locally. To send traces to OpenAI, add `--trace-openai` and set `OPENAI_API_KEY`; OpenAI hosted tracing is unavailable for zero-data-retention organizations. For the course's Langfuse setup, use `--trace` instead. The two tracing flags cannot be combined. `OPENAI_AGENTS_DISABLE_TRACING=1` disables SDK tracing for either destination.
 
+To browse recorded conversations with `hw1-session.jsonl` loaded automatically, run:
+
+```bash
+python3 -m analysis.view_sessions
+```
+
+Open <http://127.0.0.1:8021/>. Refresh to load the latest recording from disk.
+Use **Open JSONL** to view another file. Each line is one session. The sidebar shows the first user message and
+authenticated role; select a session to read its messages and expand tool calls
+for arguments and results. The viewer supports the HW1 `request` / `tool_calls` /
+`response` format and full recordings with `turns[].messages`. The launcher uses
+only Python's standard library and serves the viewer and recording on localhost.
+You can also open [the HTML file](analysis/ui/chat-viewer.html) directly and choose
+a recording manually.
+
+Right-click a session in the sidebar and choose **Flag as problematic** (or focus
+it and press **Shift+F10**). Use the **Show** dropdown to view **All sessions** or
+**Problematic only**. Right-click again to remove a flag. Flags are saved in this
+browser for each recording filename; they do not change the JSONL or homework
+assessments. Use the same browser and viewer address to keep your saved flags.
+
 The default development seed is the executable course world: 20 stores, 800
 products, 525 users, 10,000 orders, and 18 policy documents. The seed script
 is deterministic. Two runs produce identical data, and the

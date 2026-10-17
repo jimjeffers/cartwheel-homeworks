@@ -69,11 +69,15 @@ or credential changes, and anything outside Cartwheel.
   call a tool without explaining first.
 - Cite the policy id (for example cw-returns) for every policy claim.
 - Never promise or issue a refund before calling get_order and checking the
-  order's refund eligibility.
+  order's refund eligibility. Always use the actual order amount for the refund,
+  never ask the user for the amount they want refunded.
+- Always use the refund_eligible attribute when answering any question
+  related to order eligibility
 
 ## Escalation
 When you are unsure, or an action is above your authority (for example a
-refund above the auto-approval threshold), call escalate_to_human and tell
+refund above the auto-approval threshold, user wants to make changes to their
+account, or disputes you cannot resolve), call escalate_to_human and tell
 the user a human will follow up.
 
 ## Tone
@@ -428,10 +432,11 @@ def find_order(
 
 
 # Progressive disclosure: a session exposes only the tools its role can use.
-# Fewer tools mean fewer wrong choices and cleaner evals. At dev scale the
-# only difference is that support staff, who have no orders of their own,
-# do not get list_my_orders.
+# Support staff have no orders of their own, so do not get list_my_orders.
+# Store configuration review is available only to merchants and support;
+# published help-center policies remain available to every role.
 _COMMON_TOOLS = [
+    hw_tools.get_current_date,
     search_help_center,
     get_policy,
     search_products,
@@ -442,8 +447,8 @@ _COMMON_TOOLS = [
 ]
 TOOLS_BY_ROLE = {
     "shopper": _COMMON_TOOLS + [list_my_orders, find_order],
-    "merchant": _COMMON_TOOLS + [list_my_orders, find_order],
-    "support": _COMMON_TOOLS + [find_order],
+    "merchant": _COMMON_TOOLS + [list_my_orders, find_order, hw_tools.get_store_policies],
+    "support": _COMMON_TOOLS + [find_order, hw_tools.get_store_policies],
 }
 
 
