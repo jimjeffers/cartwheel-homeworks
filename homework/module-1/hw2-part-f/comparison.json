@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-22",
+  "request": "What orders have I had refunded?",
+  "hw1_line": 14,
+  "user_id": 1,
+  "role": "shopper",
+  "store_id": null,
+  "model": "gpt-4o-mini",
+  "earlier_git_commit": "a3aa8d5ce4691e63e2b0140ed89a23790ca0fb77",
+  "current_prompt_hash": "3d62551a4326",
+  "earlier_prompt_hash": "d108f6949e5e",
+  "original_agent_sha256": "26d7d752e54ec0bd82529d6e9737dd2cbd93f5ea74eb0c12c75e99d0b7506727",
+  "completed": [
+    "f-save",
+    "f-baseline",
+    "f-change",
+    "f-repeat",
+    "f-compare",
+    "f-restore"
+  ],
+  "runs": [
+    {
+      "label": "A-current",
+      "timestamp": "2026-10-22T12:23:03.700096+00:00",
+      "snapshot": "current-prompt.txt",
+      "http_status": 200,
+      "session_id": "c96b3ac5a99a43a8aa29e60822912563",
+      "scenario_id": "hw2-part-f-A-current-20261022T122303Z",
+      "prompt_version": "3d62551a4326",
+      "trace_id": "7b470eb867c821a02f467c3b39bda08f",
+      "root_span_id": "f96ca554d3ba94da",
+      "span_count": 6,
+      "model_calls": 2,
+      "model_identifiers": [
+        "gpt-4o-mini-2024-07-18"
+      ],
+      "input_tokens": 3638,
+      "output_tokens": 154,
+      "tool_order": [
+        "list_my_orders"
+      ],
+      "reply": "Here are the recent orders you had, along with their statuses:\n\n1. **Order ID:** 3988\n   - **Status:** Refunded\n   - **Total:** $155.75\n   - **Ordered on:** October 30, 2025\n   - **Delivered on:** November 8, 2025\n\nThis is the only order that shows as refunded. If you have any other questions or need further assistance, feel free to ask!",
+      "initial_history_count": 0,
+      "initial_model_message_roles": [
+        "system",
+        "user"
+      ],
+      "model_system_prompt_matches_snapshot": true,
+      "world_database_before_sha256": "90ff0ce2388571773d0e0a06af0ca0c061786099d1ace5536007e169db496079",
+      "world_database_after_sha256": "90ff0ce2388571773d0e0a06af0ca0c061786099d1ace5536007e169db496079",
+      "url": "http://localhost:18300/project/cartwheel-dev/traces?peek=7b470eb867c821a02f467c3b39bda08f&peekView=expanded"
+    },
+    {
+      "label": "B-earlier",
+      "timestamp": "2026-10-22T12:23:16.820616+00:00",
+      "snapshot": "earlier-prompt.txt",
+      "http_status": 200,
+      "session_id": "002aac1b249c48918e875a96f3942be0",
+      "scenario_id": "hw2-part-f-B-earlier-20261022T122316Z",
+      "prompt_version": "d108f6949e5e",
+      "trace_id": "039b54af990869aa902310e141a705b5",
+      "root_span_id": "afdda3dae2f20568",
+      "span_count": 6,
+      "model_calls": 2,
+      "model_identifiers": [
+        "gpt-4o-mini-2024-07-18"
+      ],
+      "input_tokens": 3503,
+      "output_tokens": 157,
+      "tool_order": [
+        "list_my_orders"
+      ],
+      "reply": "You have one order that has been refunded. Here are the details:\n\n- **Order ID:** 3988\n- **Store ID:** 12\n- **Product ID:** 448\n- **Quantity:** 1\n- **Total Amount:** $155.75\n- **Ordered At:** October 30, 2025\n- **Shipped At:** November 1, 2025\n- **Delivered At:** November 8, 2025\n- **Status:** Refunded\n\nIf you need anything else regarding your orders or refunds, feel free to ask!",
+      "initial_history_count": 0,
+      "initial_model_message_roles": [
+        "system",
+        "user"
+      ],
+      "model_system_prompt_matches_snapshot": true,
+      "world_database_before_sha256": "90ff0ce2388571773d0e0a06af0ca0c061786099d1ace5536007e169db496079",
+      "world_database_after_sha256": "90ff0ce2388571773d0e0a06af0ca0c061786099d1ace5536007e169db496079",
+      "url": "http://localhost:18300/project/cartwheel-dev/traces?peek=039b54af990869aa902310e141a705b5&peekView=expanded"
+    },
+    {
+      "label": "restore-check",
+      "timestamp": "2026-10-22T12:23:30.833668+00:00",
+      "snapshot": "current-prompt.txt",
+      "http_status": 200,
+      "session_id": "f0bf2237cb68429cbf3a25b76110c168",
+      "scenario_id": "hw2-part-f-restore-check-20261022T122330Z",
+      "prompt_version": "3d62551a4326",
+      "trace_id": "a3dfb032f06e93d530a1e64449989d84",
+      "root_span_id": "d7f7b148b17e8775",
+      "span_count": 6,
+      "model_calls": 2,
+      "model_identifiers": [
+        "gpt-4o-mini-2024-07-18"
+      ],
+      "input_tokens": 3618,
+      "output_tokens": 117,
+      "tool_order": [
+        "list_my_orders"
+      ],
+      "reply": "I found your recent orders, and it looks like you have one order that was refunded. Here are the details:\n\n- **Order ID:** 3988\n- **Status:** Refunded\n- **Total Amount:** $155.75\n- **Ordered At:** October 30, 2025\n\nIf you have any other questions or need further assistance, feel free to ask!",
+      "initial_history_count": 0,
+      "initial_model_message_roles": [
+        "system",
+        "user"
+      ],
+      "model_system_prompt_matches_snapshot": true,
+      "world_database_before_sha256": "90ff0ce2388571773d0e0a06af0ca0c061786099d1ace5536007e169db496079",
+      "world_database_after_sha256": "90ff0ce2388571773d0e0a06af0ca0c061786099d1ace5536007e169db496079",
+      "url": "http://localhost:18300/project/cartwheel-dev/traces?peek=a3dfb032f06e93d530a1e64449989d84&peekView=expanded"
+    }
+  ],
+  "restored": true,
+  "world_database_sha256": "90ff0ce2388571773d0e0a06af0ca0c061786099d1ace5536007e169db496079",
+  "source_restored_byte_for_byte": true,
+  "server_pid": 2709
+}

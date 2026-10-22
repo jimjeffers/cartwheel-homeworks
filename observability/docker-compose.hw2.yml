@@ -1,0 +1,31 @@
+# Cartwheel HW2 instance with its own project name and localhost ports.
+# Requires Docker Compose 2.24.4+ for !override (replace the base port lists).
+# From the repository root:
+#   docker compose -p cartwheel-hw2 -f observability/docker-compose.yml \
+#     -f observability/docker-compose.hw2.yml up -d
+# Agent server (separate terminal):
+#   uv run uvicorn server.app:app --host 127.0.0.1 --port 18310
+# Cartwheel .env: LANGFUSE_HOST=http://localhost:18300
+
+name: cartwheel-hw2
+
+services:
+  langfuse-web:
+    ports: !override
+      - "127.0.0.1:18300:3000"
+    environment:
+      NEXTAUTH_URL: http://localhost:18300
+
+  langfuse-worker:
+    ports: !override
+      - "127.0.0.1:18301:3030"
+
+  clickhouse:
+    ports: !override
+      - "127.0.0.1:18302:8123"
+      - "127.0.0.1:18303:9000"
+
+  minio:
+    ports: !override
+      - "127.0.0.1:18304:9000"
+      - "127.0.0.1:18305:9001"
